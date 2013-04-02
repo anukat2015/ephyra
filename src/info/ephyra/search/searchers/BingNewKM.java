@@ -2,19 +2,15 @@ package info.ephyra.search.searchers;
 
 import info.ephyra.search.Result;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
-import com.aliasi.util.Collections;
-import com.google.code.bing.search.client.BingSearchClient;
-import com.google.code.bing.search.client.BingSearchClient.SearchRequestBuilder;
-import com.google.code.bing.search.client.BingSearchServiceClientFactory;
-import com.google.code.bing.search.schema.AdultOption;
-import com.google.code.bing.search.schema.SearchOption;
-import com.google.code.bing.search.schema.SearchResponse;
-import com.google.code.bing.search.schema.SourceType;
-import com.google.code.bing.search.schema.web.WebResult;
-import com.google.code.bing.search.schema.web.WebSearchOption;
+import net.billylieurance.azuresearch.AbstractAzureSearchQuery;
+import net.billylieurance.azuresearch.AbstractAzureSearchQuery.AZURESEARCH_API;
+import net.billylieurance.azuresearch.AzureSearchResultSet;
+import net.billylieurance.azuresearch.AzureSearchWebQuery;
+import net.billylieurance.azuresearch.AzureSearchWebResult;
+import net.billylieurance.azuresearch.test.AzureSearchWebTest;
 
 /**
  * <p>A <code>KnowledgeMiner</code> that deploys the Bing search engine to
@@ -32,8 +28,8 @@ public class BingNewKM extends KnowledgeMiner {
 	/** Bing Application ID. */
 //	private static final String BING_APP_ID = "1A128D5664A0CE797F3BB450785221091616619A";
 	
-	
-	private static String BING_APP_ID ;
+	// remove string and uncomment BingNewKM() when moving to a public repository
+	private static String BING_APP_ID = "EmiiDlkMTLjnustf0rbg4/dJq9BBPZYrwhnslD6FHL4=";
 	
 	/** Maximum total number of search results. */
 	private static final int MAX_RESULTS_TOTAL = 100;
@@ -60,40 +56,83 @@ public class BingNewKM extends KnowledgeMiner {
 	public KnowledgeMiner getCopy() {
 		return new BingNewKM();
 	}
+	
+	public BingNewKM()
+	{
+//		System.out.println(AbstractAzureSearchQuery.AZURESEARCH_PATH);
+//		System.out.println(AbstractAzureSearchQuery.AZURESEARCHWEB_PATH);
+		
+//		AbstractAzureSearchQuery.AZURESEARCH_PATH="/Bing/Search/v1/";
+//		AbstractAzureSearchQuery.AZURESEARCHWEB_PATH="/Bing/SearchWeb/v1/";
+//		 Properties props = new Properties();
+//		 try
+//		{
+//			props.load(new FileReader("conf/searchapikeys.properties"));
+////		
+//		
+//		} catch (IOException e)
+//		{
+//			throw new RuntimeException(e);
+//		}
+	}
 
 	@Override
 	protected Result[] doSearch() {
-		// get a search client
-		BingSearchServiceClientFactory factory = BingSearchServiceClientFactory
-				.newInstance();
-		BingSearchClient client = factory.createBingSearchClient();
-
-		// configure search client
-		SearchRequestBuilder builder = client.newSearchRequestBuilder();
-		builder.withAppId(BING_APP_ID);
-		builder.withQuery(query.getQueryString());
-		builder.withSourceType(SourceType.WEB);
-		builder.withVersion("2.0");
-		builder.withMarket("en-us");
-		builder.withAdultOption(AdultOption.MODERATE);
-		builder.withSearchOption(SearchOption.ENABLE_HIGHLIGHTING);
-		builder.withWebRequestCount((long) maxResults);
-		builder.withWebRequestOffset((long) firstResult);
-		builder.withWebRequestSearchOption(WebSearchOption.DISABLE_HOST_COLLAPSING);
-		builder.withWebRequestSearchOption(WebSearchOption.DISABLE_QUERY_ALTERATIONS);
-
-		// do the actual search here, and collect the results
-		SearchResponse response = client.search(builder.getResult());
-		List<WebResult> results = response.getWeb().getResults();
-		ArrayList<String> snippets = new ArrayList<String>();
-		ArrayList<String> urls = new ArrayList<String>();
-		for (WebResult result : results) {
-			snippets.add(result.getDescription());
-			urls.add(result.getUrl());
+		AzureSearchWebQuery aq = new AzureSearchWebQuery();
+		aq.setAppid(BING_APP_ID);		
+		aq.setQuery("Oklahoma Sooners");
+		aq.setBingApi(AZURESEARCH_API.BINGSEARCHWEBONLY);
+		System.out.println(aq.getUrlQuery());
+		System.out.println("searching for: "+aq.getQuery());
+//		aq.setQuery(query.getQueryString());
+        
+		aq.doQuery();
+		AzureSearchResultSet<AzureSearchWebResult> ars = aq.getQueryResult();
+		System.out.println(ars.getASRs().size());
+		List<Result> results = new LinkedList<>();
+		for (AzureSearchWebResult anr : ars)
+		{
+			System.out.println(anr.getTitle());
+			Result result = new Result(anr.getUrl(),query);
+			results.add(result);
 		}
+		
 
-		// return results
-		return getResults(Collections.toStringArray(snippets),
-				Collections.toStringArray(urls), true);
+		// end new stuff *******************************
+		
+		// get a search client
+//		BingSearchServiceClientFactory factory = BingSearchServiceClientFactory
+//				.newInstance();
+//		BingSearchClient client = factory.createBingSearchClient();
+//
+//		// configure search client
+//		SearchRequestBuilder builder = client.newSearchRequestBuilder();
+//		builder.withAppId(BING_APP_ID);
+//		builder.withQuery(query.getQueryString());
+//		builder.withSourceType(SourceType.WEB);
+//		builder.withVersion("2.0");
+//		builder.withMarket("en-us");
+//		builder.withAdultOption(AdultOption.MODERATE);
+//		builder.withSearchOption(SearchOption.ENABLE_HIGHLIGHTING);
+//		builder.withWebRequestCount((long) maxResults);
+//		builder.withWebRequestOffset((long) firstResult);
+//		builder.withWebRequestSearchOption(WebSearchOption.DISABLE_HOST_COLLAPSING);
+//		builder.withWebRequestSearchOption(WebSearchOption.DISABLE_QUERY_ALTERATIONS);
+//
+//		// do the actual search here, and collect the results
+//		SearchResponse response = client.search(builder.getResult());
+//		List<WebResult> results = response.getWeb().getResults();
+//		ArrayList<String> snippets = new ArrayList<String>();
+//		ArrayList<String> urls = new ArrayList<String>();
+//		for (WebResult result : results) {
+//			snippets.add(result.getDescription());
+//			urls.add(result.getUrl());
+//		}
+//
+//		// return results
+//		return getResults(Collections.toStringArray(snippets),
+//				Collections.toStringArray(urls), true);
+		
+			return results.toArray(new Result[0]);
 	}
 }
