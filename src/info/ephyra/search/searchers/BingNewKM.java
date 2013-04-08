@@ -1,16 +1,12 @@
 package info.ephyra.search.searchers;
 
 import info.ephyra.search.Result;
-
 import java.util.LinkedList;
 import java.util.List;
-
-import net.billylieurance.azuresearch.AbstractAzureSearchQuery;
 import net.billylieurance.azuresearch.AbstractAzureSearchQuery.AZURESEARCH_API;
 import net.billylieurance.azuresearch.AzureSearchResultSet;
 import net.billylieurance.azuresearch.AzureSearchWebQuery;
 import net.billylieurance.azuresearch.AzureSearchWebResult;
-import net.billylieurance.azuresearch.test.AzureSearchWebTest;
 
 /**
  * <p>A <code>KnowledgeMiner</code> that deploys the Bing search engine to
