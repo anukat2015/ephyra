@@ -75,12 +75,13 @@ public class BingNewKM extends KnowledgeMiner {
 	@Override
 	protected Result[] doSearch() {
 		AzureSearchWebQuery aq = new AzureSearchWebQuery();
-		aq.setAppid(BING_APP_ID);		
-		aq.setQuery("Oklahoma Sooners");
+		aq.setAppid(BING_APP_ID);
+		aq.setQuery(query.getQueryString());
+//		aq.setQuery("Oklahoma Sooners");
 		aq.setBingApi(AZURESEARCH_API.BINGSEARCHWEBONLY);
 		System.out.println(aq.getUrlQuery());
 		System.out.println("searching for: "+aq.getQuery());
-//		aq.setQuery(query.getQueryString());
+		
         
 		aq.doQuery();
 		AzureSearchResultSet<AzureSearchWebResult> ars = aq.getQueryResult();

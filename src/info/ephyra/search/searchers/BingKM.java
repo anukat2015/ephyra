@@ -54,7 +54,7 @@ public class BingKM extends KnowledgeMiner {
 	 */
 	@Override
 	public KnowledgeMiner getCopy() {
-		return new BingKM();
+		return new BingNewKM();
 	}
 
 	@Override

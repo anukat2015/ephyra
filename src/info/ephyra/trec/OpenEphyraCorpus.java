@@ -32,9 +32,8 @@ import info.ephyra.questionanalysis.QuestionAnalysis;
 import info.ephyra.questionanalysis.QuestionNormalizer;
 import info.ephyra.search.Result;
 import info.ephyra.search.Search;
-import info.ephyra.search.searchers.BingKM;
+import info.ephyra.search.searchers.BingNewKM;
 import info.ephyra.search.searchers.IndriKM;
-
 import java.util.ArrayList;
 
 /**
@@ -140,7 +139,7 @@ public class OpenEphyraCorpus extends OpenEphyra {
 		// search
 		// - knowledge miners for unstructured knowledge sources
 		Search.clearKnowledgeMiners();
-		Search.addKnowledgeMiner(new BingKM());
+		Search.addKnowledgeMiner(new BingNewKM());
 //		Search.addKnowledgeMiner(new GoogleKM());
 //		Search.addKnowledgeMiner(new YahooKM());
 		// - knowledge annotators for (semi-)structured knowledge sources

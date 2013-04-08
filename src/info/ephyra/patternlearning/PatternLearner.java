@@ -17,14 +17,13 @@ import info.ephyra.questionanalysis.QuestionInterpreter;
 import info.ephyra.questionanalysis.QuestionNormalizer;
 import info.ephyra.search.Result;
 import info.ephyra.search.Search;
-import info.ephyra.search.searchers.BingKM;
+import info.ephyra.search.searchers.BingNewKM;
 import info.ephyra.trec.TREC8To12Parser;
 import info.ephyra.trec.TRECAnswer;
 import info.ephyra.trec.TRECPattern;
 import info.ephyra.trec.TRECQuestion;
 import info.ephyra.util.FileUtils;
 import info.ephyra.util.RegexConverter;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -403,7 +402,7 @@ public class PatternLearner {
 		
 		// add knowledge miners used to fetch text passages for pattern learning
 		MsgPrinter.printStatusMsg("Adding BingKM...");
-		Search.addKnowledgeMiner(new BingKM());
+		Search.addKnowledgeMiner(new BingNewKM());
 //		MsgPrinter.printStatusMsg("Adding GoogleKM...");
 //		Search.addKnowledgeMiner(new GoogleKM());
 //		MsgPrinter.printStatusMsg("Adding YahooKM...");

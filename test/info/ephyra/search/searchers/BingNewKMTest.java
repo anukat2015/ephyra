@@ -7,7 +7,6 @@ import org.junit.Test;
 
 public class BingNewKMTest
 {
-
 	@Test
 	public void testDoSearch()
 	{
