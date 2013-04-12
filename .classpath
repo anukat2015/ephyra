@@ -32,7 +32,7 @@
 	<classpathentry kind="lib" path="lib/util/htmlparser.jar"/>
 	<classpathentry kind="lib" path="lib/util/log4j.jar"/>
 	<classpathentry kind="lib" path="lib/util/trove.jar"/>
-	<classpathentry kind="lib" path="/home/konrad/projekte/java-maven/ephyra/lib/search/new/azure-bing-search-java-0.12.0_modified.jar" sourcepath="lib/search/new/azure-bing-search-java-0.12.0-sources_modified.jar"/>
+	<classpathentry kind="lib" path="lib/search/new/azure-bing-search-java-0.12.0_modified.jar" sourcepath="lib/search/new/azure-bing-search-java-0.12.0-sources_modified.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
