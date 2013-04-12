@@ -32,6 +32,8 @@ public class BingNewKM extends KnowledgeMiner {
 	/** Maximum number of search results per query. */
 	private static final int MAX_RESULTS_PERQUERY = 50;
 
+	private static final String	SITE_SPECIFIER	= " site:en.wikipedia.org ";
+
 	@Override
 	protected int getMaxResultsTotal() {
 		return MAX_RESULTS_TOTAL;
@@ -76,13 +78,14 @@ public class BingNewKM extends KnowledgeMiner {
 	protected Result[] doSearch() {
 		AzureSearchWebQuery aq = new AzureSearchWebQuery();
 		aq.setAppid(BING_APP_ID);
-		aq.setQuery(query.getQueryString());
+		aq.setQuery(query.getQueryString()+SITE_SPECIFIER);
+
 //		aq.setQuery("Oklahoma Sooners");
 		aq.setBingApi(AZURESEARCH_API.BINGSEARCHWEBONLY);
+//		aq.setWebSearchOptions("");
 		System.out.println(aq.getUrlQuery());
 		System.out.println("searching for: "+aq.getQuery());
 		
-        
 		aq.doQuery();
 		AzureSearchResultSet<AzureSearchWebResult> ars = aq.getQueryResult();
 		System.out.println(ars.getASRs().size());
@@ -90,7 +93,8 @@ public class BingNewKM extends KnowledgeMiner {
 		for (AzureSearchWebResult anr : ars)
 		{
 			System.out.println(anr.getTitle());
-			Result result = new Result(anr.getUrl(),query);
+			Result result = new Result(anr.getUrl()/*.replace("http://en.wikipedia.org/wiki/", "http://dbpedia.org/resource/")*/,query);
+			
 			results.add(result);
 		}
 		

@@ -40,8 +40,8 @@ public class EphyraTREC8To11 extends OpenEphyraCorpus {
 	 */
 	private static void loadTRECData(String qFile, String pFile) {
 		// load questions from file	
-		if(!new File(qFile).exists()) {throw new RuntimeException("question file does exist: "+qFile.getAbsolutePath());}
-		if(!new File(pFile).exists()) {throw new RuntimeException("pattern file does exist: "+pFile.getAbsolutePath());}
+		if(!new File(qFile).exists()) {throw new RuntimeException("question file does exist: "+qFile);}
+		if(!new File(pFile).exists()) {throw new RuntimeException("pattern file does exist: "+pFile);}
 		TRECQuestion[] questions = TREC8To12Parser.loadQuestions(qFile);
 		qss = new String[questions.length];
 		for (int i = 0; i < questions.length; i++)
