@@ -43,6 +43,16 @@ import info.ephyra.search.Result;
 import info.ephyra.search.Search;
 import info.ephyra.search.searchers.BingNewKM;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import org.dllearner.algorithms.qtl.QTL;
+import org.dllearner.core.ComponentInitException;
+import org.dllearner.core.ComponentManager;
+import org.dllearner.core.LearningProblemUnsupportedException;
+import org.dllearner.kb.SparqlEndpointKS;
+import org.dllearner.kb.sparql.SparqlEndpoint;
+import org.dllearner.learningproblems.PosOnlyLP;
+import org.dllearner.utilities.Helper;
 
 /**
  * <code>OpenEphyra</code> is an open framework for question answering (QA).
@@ -57,9 +67,9 @@ public class OpenEphyraDbpedia {
 	protected static final String LIST = "LIST";
 	
 	/** Maximum number of factoid answers. */
-	protected static final int FACTOID_MAX_ANSWERS = 1;
+	protected static final int FACTOID_MAX_ANSWERS = 10;
 	/** Absolute threshold for factoid answer scores. */
-	protected static final float FACTOID_ABS_THRESH = 0;
+	protected static final float FACTOID_ABS_THRESH = 0.1f;
 	/** Relative threshold for list answer scores (fraction of top score). */
 	protected static final float LIST_REL_THRESH = 0.1f;
 	
@@ -79,8 +89,10 @@ public class OpenEphyraDbpedia {
 	 * interface.
 	 * 
 	 * @param args command line arguments are ignored
+	 * @throws ComponentInitException 
+	 * @throws LearningProblemUnsupportedException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws LearningProblemUnsupportedException, ComponentInitException {
 		// enable output of status and error messages
 		MsgPrinter.enableStatusMsgs(true);
 		MsgPrinter.enableErrorMsgs(true);
@@ -338,8 +350,10 @@ public class OpenEphyraDbpedia {
 	 * question and prints out and logs the results.</p>
 	 * 
 	 * <p>The command <code>exit</code> can be used to quit the program.</p>
+	 * @throws LearningProblemUnsupportedException 
+	 * @throws ComponentInitException 
 	 */
-	public void commandLine() {
+	public void commandLine() throws LearningProblemUnsupportedException, ComponentInitException {
 		while (true) {
 			// query user for question, quit if user types in "exit"
 			MsgPrinter.printQuestionPrompt();
@@ -380,8 +394,12 @@ public class OpenEphyraDbpedia {
 			MsgPrinter.printAnswers(results);
 			
 			Set<String> positiveExamples = new HashSet<String>();
-			positiveExamples.add("http://dbpedia.org/resource/Liverpool_F.C.");
-			positiveExamples.add("http://dbpedia.org/resource/Chelsea_F.C.");
+			for(Result result : results)
+			{
+				positiveExamples.add(result.getAnswer().replace("http://en.wikipedia.org/wiki/", "http://dbpedia.org/resource/"));
+			}
+//			positiveExamples.add("http://dbpedia.org/resource/Liverpool_F.C.");
+//			positiveExamples.add("http://dbpedia.org/resource/Chelsea_F.C.");
 			
 			ComponentManager cm = ComponentManager.getInstance();
 			SparqlEndpointKS ks = new SparqlEndpointKS(SparqlEndpoint.getEndpointDBpedia());

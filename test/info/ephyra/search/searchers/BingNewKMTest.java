@@ -11,9 +11,12 @@ public class BingNewKMTest
 	public void testDoSearch()
 	{
 		BingNewKM km = new BingNewKM();
-		km.query = new Query("Das offizielle Internet-Portal für Leipziger Bürger");
-		Result result = km.doSearch()[0];
-		System.out.println(result);
+		km.query = new Query("leipzig");
+		for(Result result: km.doSearch())
+		{
+			System.out.println(result.getAnswer());
+		}
+//		Result result = km.doSearch()[0];
+//		System.out.println(result);
 	}
-
 }

@@ -2,6 +2,7 @@ package info.ephyra.nlp;
 
 import org.tartarus.snowball.ext.englishStemmer;
 
+
 /**
  * This class provides an interface to the Snowball stemmer for the English
  * language.

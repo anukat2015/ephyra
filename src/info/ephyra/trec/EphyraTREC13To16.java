@@ -15,8 +15,6 @@ import info.ephyra.answerselection.filters.ScoreSorterFilter;
 import info.ephyra.answerselection.filters.SentenceExtractionFilter;
 import info.ephyra.answerselection.filters.SentenceSplitterFilter;
 import info.ephyra.answerselection.filters.TermFilter;
-import info.ephyra.answerselection.filters.WebTermImportanceFilter;
-import info.ephyra.answerselection.filters.WikipediaGoogleTermImportanceFilter;
 import info.ephyra.io.Logger;
 import info.ephyra.io.MsgPrinter;
 import info.ephyra.nlp.NETagger;
@@ -31,8 +29,6 @@ import info.ephyra.questionanalysis.QuestionInterpreter;
 import info.ephyra.questionanalysis.QuestionNormalizer;
 import info.ephyra.search.Result;
 import info.ephyra.search.Search;
-import info.ephyra.search.searchers.IndriKM;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -530,10 +526,10 @@ public class EphyraTREC13To16 extends OpenEphyraCorpus {
 		// search
 		// - knowledge miners for unstructured knowledge sources
 		Search.clearKnowledgeMiners();
-		for (String[] indriIndices : IndriKM.getIndriIndices())
-			Search.addKnowledgeMiner(new IndriKM(indriIndices, false));
-		for (String[] indriServers : IndriKM.getIndriServers())
-			Search.addKnowledgeMiner(new IndriKM(indriServers, true));
+//		for (String[] indriIndices : IndriKM.getIndriIndices())
+//			Search.addKnowledgeMiner(new IndriKM(indriIndices, false));
+//		for (String[] indriServers : IndriKM.getIndriServers())
+//			Search.addKnowledgeMiner(new IndriKM(indriServers, true));
 		// - knowledge annotators for (semi-)structured knowledge sources
 		Search.clearKnowledgeAnnotators();
 		
@@ -565,13 +561,13 @@ public class EphyraTREC13To16 extends OpenEphyraCorpus {
 		//	sort out snippets containing no new terms
 		AnswerSelection.addFilter(new TermFilter());
 		
-		AnswerSelection.addFilter(
-				new WikipediaGoogleTermImportanceFilter(
-					WebTermImportanceFilter.LOG_LENGTH_NORMALIZATION,
-					WebTermImportanceFilter.LOG_LENGTH_NORMALIZATION,
-					false
-				)
-			);
+//		AnswerSelection.addFilter(
+//				new WikipediaGoogleTermImportanceFilter(
+//					WebTermImportanceFilter.LOG_LENGTH_NORMALIZATION,
+//					WebTermImportanceFilter.LOG_LENGTH_NORMALIZATION,
+//					false
+//				)
+//			);
 		AnswerSelection.addFilter(new ScoreSorterFilter());
 		
 		//	cut off result

@@ -3,7 +3,6 @@ package info.ephyra.nlp;
 import info.ephyra.io.MsgPrinter;
 import info.ephyra.util.FileUtils;
 import info.ephyra.util.StringUtils;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileFilter;
@@ -16,13 +15,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-
 import opennlp.maxent.MaxentModel;
 import opennlp.maxent.io.SuffixSensitiveGISModelReader;
 import opennlp.tools.lang.english.NameFinder;
 import opennlp.tools.namefind.NameFinderME;
 import opennlp.tools.parser.Parse;
 import opennlp.tools.util.Span;
+//import opennlp.maxent.io.SuffixSensitiveGISModelReader;
+////import opennlp.model.MaxentModel;
+//import opennlp.tools.lang.english.NameFinder;
 
 /**
  * <p>This class combines model-based, pattern-based and list-based named entity
