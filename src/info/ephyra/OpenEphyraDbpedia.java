@@ -69,7 +69,7 @@ public class OpenEphyraDbpedia {
 	/** Maximum number of factoid answers. */
 	protected static final int FACTOID_MAX_ANSWERS = 10;
 	/** Absolute threshold for factoid answer scores. */
-	protected static final float FACTOID_ABS_THRESH = 0.1f;
+	protected static final float FACTOID_ABS_THRESH = 0;
 	/** Relative threshold for list answer scores (fraction of top score). */
 	protected static final float LIST_REL_THRESH = 0.1f;
 	
