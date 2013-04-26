@@ -74,8 +74,10 @@ public class BingNewKM extends KnowledgeMiner {
 //		}
 	}
 
+	/** Searches using Microsoft Azure Api, doesn't return score, thus all results have score 1.	 */
 	@Override
-	protected Result[] doSearch() {
+	protected Result[] doSearch()
+	{
 		AzureSearchWebQuery aq = new AzureSearchWebQuery();
 		aq.setAppid(BING_APP_ID);
 		aq.setQuery(query.getQueryString()+SITE_SPECIFIER);
@@ -93,8 +95,9 @@ public class BingNewKM extends KnowledgeMiner {
 		for (AzureSearchWebResult anr : ars)
 		{
 			System.out.println(anr.getTitle());
-			Result result = new Result(anr.getUrl()/*.replace("http://en.wikipedia.org/wiki/", "http://dbpedia.org/resource/")*/,query);
 			
+			Result result = new Result(anr.getUrl()/*.replace("http://en.wikipedia.org/wiki/", "http://dbpedia.org/resource/")*/,query);
+			result.setScore(1); // azure doesnt return scores
 			results.add(result);
 		}
 		

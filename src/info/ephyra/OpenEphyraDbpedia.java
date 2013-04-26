@@ -14,6 +14,7 @@ import info.ephyra.answerselection.filters.ScoreSorterFilter;
 import info.ephyra.answerselection.filters.StopwordFilter;
 import info.ephyra.answerselection.filters.TruncationFilter;
 import info.ephyra.answerselection.filters.WebDocumentFetcherFilter;
+import info.ephyra.answerselection.filters.WikipediaResourceFilter;
 import info.ephyra.io.Logger;
 import info.ephyra.io.MsgPrinter;
 import info.ephyra.nlp.LingPipe;
@@ -298,14 +299,15 @@ public class OpenEphyraDbpedia {
 		AnswerSelection.addFilter(new PredicateExtractionFilter());
 		AnswerSelection.addFilter(new FactoidsFromPredicatesFilter());
 		AnswerSelection.addFilter(new TruncationFilter());
+		AnswerSelection.addFilter(new WikipediaResourceFilter());
 		// - answer selection filters
-		AnswerSelection.addFilter(new StopwordFilter());
-		AnswerSelection.addFilter(new QuestionKeywordsFilter());
-		AnswerSelection.addFilter(new ScoreNormalizationFilter(NORMALIZER));
-		AnswerSelection.addFilter(new ScoreCombinationFilter());
+//		AnswerSelection.addFilter(new StopwordFilter());
+//		AnswerSelection.addFilter(new QuestionKeywordsFilter());
+//		AnswerSelection.addFilter(new ScoreNormalizationFilter(NORMALIZER));
+//		AnswerSelection.addFilter(new ScoreCombinationFilter());
 		AnswerSelection.addFilter(new FactoidSubsetFilter());
 		AnswerSelection.addFilter(new DuplicateFilter());
-		AnswerSelection.addFilter(new ScoreSorterFilter());
+//		AnswerSelection.addFilter(new ScoreSorterFilter());
 	}
 	
 	/**
@@ -372,7 +374,7 @@ public class OpenEphyraDbpedia {
 				question = question.split(":", 2)[1].trim();
 			} else {
 				// question type unspecified
-				type = FACTOID;  // default type
+				type = LIST;  // default type
 			}
 			
 			// ask question
@@ -394,10 +396,12 @@ public class OpenEphyraDbpedia {
 			MsgPrinter.printAnswers(results);
 			
 			Set<String> positiveExamples = new HashSet<String>();
+			
 			for(Result result : results)
 			{
 				positiveExamples.add(result.getAnswer().replace("http://en.wikipedia.org/wiki/", "http://dbpedia.org/resource/"));
 			}
+			System.out.println("***************************"+positiveExamples.size()+" positive examples"+"***************************");
 //			positiveExamples.add("http://dbpedia.org/resource/Liverpool_F.C.");
 //			positiveExamples.add("http://dbpedia.org/resource/Chelsea_F.C.");
 			
