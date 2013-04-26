@@ -32,6 +32,12 @@ public class DuplicateFilter extends Filter {
 		this.forbidden = forbidden;
 	}
 	
+	/** in case the String is a url, only return the last part (after the last occurrence of "/" and "#") */
+	String urlSuffix(String s)
+	{
+		if(s==null) {return null;}
+		return s.substring(Math.max(s.lastIndexOf('/'), s.lastIndexOf('/')));
+	}
 	/**
 	 * Filters duplicate results and increments the scores of the remaining
 	 * results by the scores of the dropped results.
@@ -50,7 +56,7 @@ public class DuplicateFilter extends Filter {
 					results[i].getScore() == Float.POSITIVE_INFINITY) continue;
 				if (results[i].getScore() == Float.NEGATIVE_INFINITY) break;
 				
-				if (StringUtils.equalsCommonNorm(as, results[i].getAnswer()))
+				if (StringUtils.equalsCommonNorm(urlSuffix(as), urlSuffix(results[i].getAnswer())))
 					results[i] = null;
 			}
 		
@@ -65,8 +71,8 @@ public class DuplicateFilter extends Filter {
 					results[j].getScore() == Float.POSITIVE_INFINITY) continue;
 				if (results[j].getScore() == Float.NEGATIVE_INFINITY) break;
 				
-				if (StringUtils.equalsCommonNorm(results[i].getAnswer(),
-												 results[j].getAnswer())) {
+				if (StringUtils.equalsCommonNorm(urlSuffix(results[i].getAnswer()), // if answer is a url, only get the last part
+						urlSuffix(results[j].getAnswer()))) {
 					// increment score of higher-scored result
 					results[i].incScore(results[j].getScore());
 					// drop lower-scored result
