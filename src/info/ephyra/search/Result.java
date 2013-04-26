@@ -572,4 +572,10 @@ public class Result implements Comparable<Result>, Serializable {
 			scores[i] = iter.next().floatValue();
 		return scores;
 	}
+	
+	
+	@Override public String toString()
+	{
+		return "Result [answer=" + answer + ", score=" + score + "]";
+	}
 }
